@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaSense Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand-mark">A</div>
+      <nav class="side-nav" aria-label="Menu utama">
+        <button class="nav-item active" aria-label="Dashboard">
+          <svg viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Analitik">
+          <svg viewBox="0 0 24 24"><path d="M5 20V9h3v11H5Zm5 0V4h3v16h-3Zm5 0v-7h3v7h-3Z"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Notifikasi">
+          <svg viewBox="0 0 24 24"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-5v-5a7 7 0 0 0-5-6.7V4a2 2 0 1 0-4 0v1.3A7 7 0 0 0 5 12v5l-2 2h18l-2-2Z"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Pengaturan">
+          <svg viewBox="0 0 24 24"><path d="m19.43 12.98.04-.98-.04-.98 2.11-1.65-2-3.46-2.49 1a7.3 7.3 0 0 0-1.7-.98L15 3.27h-4l-.35 2.66c-.61.25-1.18.58-1.7.98l-2.49-1-2 3.46 2.11 1.65-.04.98.04.98-2.11 1.65 2 3.46 2.49-1c.52.4 1.09.73 1.7.98L11 20.73h4l.35-2.66a7.3 7.3 0 0 0 1.7-.98l2.49 1 2-3.46-2.11-1.65ZM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
+        </button>
+      </nav>
+      <button class="profile" aria-label="Profil pengguna">RA</button>
+    </aside>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SMART WATER MONITORING</p>
+          <h1>Dashboard Kualitas Air</h1>
+          <p class="subheading">Pantau kondisi seluruh kolam dalam satu tampilan.</p>
+        </div>
+        <div class="top-actions">
+          <div class="live-indicator" id="liveIndicator">
+            <span class="pulse-dot"></span>
+            <span id="liveText">Live monitoring</span>
+          </div>
+          <button class="btn btn-muted" id="pauseButton">
+            <svg viewBox="0 0 24 24"><path id="pauseIcon" d="M7 5h4v14H7V5Zm6 0h4v14h-4V5Z"/></svg>
+            <span id="pauseLabel">Pause</span>
+          </button>
+          <button class="btn btn-primary" id="exportButton">
+            <svg viewBox="0 0 24 24"><path d="M11 3h2v9l3.5-3.5 1.4 1.4L12 15.8 6.1 9.9l1.4-1.4L11 12V3Zm-6 14h14v3H5v-3Z"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </header>
+
+      <section class="summary-grid" id="summaryGrid" aria-label="Ringkasan kolam"></section>
+
+      <section class="dashboard-grid">
+        <div class="left-column">
+          <section class="panel water-overview">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">REALTIME SENSOR</p>
+                <h2>Kondisi <span id="selectedPoolTitle">Kolam 01</span></h2>
+              </div>
+              <div class="status-pill" id="selectedPoolStatus">Normal</div>
+            </div>
+            <div class="gauge-grid">
+              <article class="gauge-card">
+                <div class="gauge-copy">
+                  <span class="metric-label">pH Air</span>
+                  <strong><span id="phValue">7.20</span><small> pH</small></strong>
+                  <p id="phCaption">Kondisi optimal</p>
+                </div>
+                <svg class="gauge" viewBox="0 0 240 150" role="img" aria-label="Gauge pH air">
+                  <path class="gauge-bg" d="M30 125 A90 90 0 0 1 210 125" />
+                  <path class="gauge-segment danger" d="M30 125 A90 90 0 0 1 42 80" />
+                  <path class="gauge-segment warning" d="M44 77 A90 90 0 0 1 81 44" />
+                  <path class="gauge-segment good" d="M85 42 A90 90 0 0 1 155 42" />
+                  <path class="gauge-segment warning" d="M159 44 A90 90 0 0 1 196 77" />
+                  <path class="gauge-segment danger" d="M198 80 A90 90 0 0 1 210 125" />
+                  <g class="needle" id="phNeedle">
+                    <path d="M117 123 L120 47 L123 123Z" />
+                    <circle cx="120" cy="123" r="8" />
+                  </g>
+                  <text x="28" y="143">0</text>
+                  <text x="203" y="143">14</text>
+                </svg>
+                <div class="optimal-range">Optimal <strong>6.5 - 8.5</strong></div>
+              </article>
+              <article class="gauge-card">
+                <div class="gauge-copy">
+                  <span class="metric-label">Total Dissolved Solids</span>
+                  <strong><span id="tdsValue">168</span><small> ppm</small></strong>
+                  <p id="tdsCaption">Kualitas air baik</p>
+                </div>
+                <svg class="gauge" viewBox="0 0 240 150" role="img" aria-label="Gauge total dissolved solids">
+                  <path class="gauge-bg" d="M30 125 A90 90 0 0 1 210 125" />
+                  <path class="gauge-segment good wide" d="M30 125 A90 90 0 0 1 95 39" />
+                  <path class="gauge-segment warning medium" d="M100 36 A90 90 0 0 1 177 57" />
+                  <path class="gauge-segment danger short" d="M181 61 A90 90 0 0 1 210 125" />
+                  <g class="needle" id="tdsNeedle">
+                    <path d="M117 123 L120 47 L123 123Z" />
+                    <circle cx="120" cy="123" r="8" />
+                  </g>
+                  <text x="26" y="143">0</text>
+                  <text x="194" y="143">500</text>
+                </svg>
+                <div class="optimal-range">Optimal <strong>100 - 300 ppm</strong></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel chart-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">HISTORICAL TREND</p>
+                <h2>Pergerakan Kualitas Air</h2>
+              </div>
+            </div>
+            <div class="trend-grid">
+              <article class="trend-card">
+                <div class="trend-card-header">
+                  <span><i class="legend-dot ph"></i>pH Air</span>
+                  <strong id="chartPhValue">7.20 pH</strong>
+                </div>
+                <div class="chart-wrap">
+                  <svg class="line-chart" id="phLineChart" viewBox="0 0 900 210" preserveAspectRatio="none" role="img" aria-label="Grafik histori pH air"></svg>
+                </div>
+              </article>
+              <article class="trend-card">
+                <div class="trend-card-header">
+                  <span><i class="legend-dot tds"></i>Total Dissolved Solids</span>
+                  <strong id="chartTdsValue">168 ppm</strong>
+                </div>
+                <div class="chart-wrap">
+                  <svg class="line-chart" id="tdsLineChart" viewBox="0 0 900 210" preserveAspectRatio="none" role="img" aria-label="Grafik histori TDS"></svg>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="panel ponds-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">POND HEATMAP</p>
+              <h2>Kondisi Kolam</h2>
+            </div>
+            <span class="updated-time" id="updatedTime">Baru saja</span>
+          </div>
+          <p class="panel-description">Pilih kolam untuk melihat detail sensor dan riwayat pengukuran.</p>
+          <div class="heatmap" id="heatmap" aria-label="Heatmap kondisi kolam"></div>
+          <div class="heatmap-legend">
+            <span><i class="legend-box normal"></i>Normal</span>
+            <span><i class="legend-box attention"></i>Perhatian</span>
+            <span><i class="legend-box critical"></i>Kritis</span>
+          </div>
+          <div class="selected-detail" id="selectedDetail"></div>
+        </aside>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
